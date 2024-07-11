@@ -9,5 +9,4 @@ public class EcosistemasApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EcosistemasApplication.class, args);
 	}
-
 }
