@@ -51,6 +51,12 @@ public class UserController {
         return "Sesión cerrada.";
     }
 
+    @DeleteMapping("/{id}")
+    public String deleteuser(String email){
+        userService.deletebyemail(email);
+        return "eliminado";
+    }
+
     @PostMapping
     public ResponseEntity<User> saveUser(@RequestBody User user) {
         User newUser = userService.saveUser(user);

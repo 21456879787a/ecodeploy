@@ -65,4 +65,15 @@ public class UserService implements IUserService {
             user.setDeleted(false); // Set deleted FALSE --> Account Reactivation
         }
     }
+
+    @Override
+    public String deletebyemail(String email){
+        User foundUser = usuarioRepo.findByEmail(email);
+        if(foundUser != null){
+            usuarioRepo.deleteById(foundUser.getId());
+            return "eliminado";
+
+        }
+        return "no encontrado";
+    }
 }

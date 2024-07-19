@@ -17,4 +17,6 @@ public interface IUserService {
     public void switchState(User user);
 
     String generateJwtToken(User user);
+
+    String deletebyemail(String email);
 }
