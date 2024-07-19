@@ -1,7 +1,11 @@
 package com.semillero.ecosistemas.model;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,4 +26,8 @@ public class Province {
     @JsonBackReference
     private Country country;
 
+    public Province(String name, Country country) {
+        this.name = name;
+        this.country = country;
+    }
 }
