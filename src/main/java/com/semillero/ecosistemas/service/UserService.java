@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService implements IUserService {
 
@@ -15,6 +17,11 @@ public class UserService implements IUserService {
 
     @Autowired
     JwtService jwtConfig;
+
+    @Override
+    public User findUserByEmail(String email) {
+        return usuarioRepo.findByEmail(email);
+    }
 
     @Override
     public User saveGoogleUser(OAuth2User oAuth2User) {
@@ -75,5 +82,10 @@ public class UserService implements IUserService {
 
         }
         return "no encontrado";
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        return usuarioRepo.findAll();
     }
 }
