@@ -6,8 +6,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -17,14 +15,19 @@ public class SecurityConfig {
                 .csrf().disable()  // Desactiva CSRF
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("/api/users/login", "/api/users/protegido").authenticated()
+                                .requestMatchers("/api/users/login", "/api/users/protegido", "/api/users/token").authenticated()
                                 .anyRequest().permitAll()
                 )
-                .oauth2Login(withDefaults())
+                .oauth2Login(oauth2 -> oauth2
+                        .successHandler((request, response, authentication) -> {
+                            response.sendRedirect("http://localhost:5173");
+                        })
+                )
                 .logout(logout ->
                         logout
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
+                                .logoutSuccessUrl("http://localhost:5173")
                 );
         return http.build();
     }

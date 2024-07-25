@@ -41,19 +41,19 @@ public class UserController {
     @GetMapping("/token")
     public ResponseEntity<?> getToken(@AuthenticationPrincipal OAuth2User oAuth2User) {
         try {
-//            if (oAuth2User == null) {
-//                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
-//            }
+            if (oAuth2User == null) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated");
+            }
 
             String email = oAuth2User.getAttribute("email");
-//            if (email == null) {
-//                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email attribute is missing");
-//            }
+            if (email == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email attribute is missing");
+            }
 
             User user = userService.findUserByEmail(email);
-//            if (user == null) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-//            }
+            if (user == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+            }
             String token = userService.generateJwtToken(user);
             return ResponseEntity.ok(new AuthResponse(token));
         } catch (Exception e) {
