@@ -20,11 +20,8 @@ public class SecurityConfig {
                                 .requestMatchers("/api/users/login", "/api/users/protegido").authenticated()
                                 .anyRequest().permitAll()
                 )
-                .oauth2Login(oauth2 -> oauth2
-                        .successHandler((request, response, authentication) -> {
-                            response.sendRedirect("http://localhost:5173");
-                        })
-                ).logout(logout ->
+                .oauth2Login(withDefaults())
+                .logout(logout ->
                         logout
                                 .invalidateHttpSession(true)
                                 .clearAuthentication(true)
