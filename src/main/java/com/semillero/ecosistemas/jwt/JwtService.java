@@ -24,23 +24,37 @@
             Date now = new Date();
             Date expirationDate = new Date(now.getTime() + expirationMs);
             Map<String, Object> claims = new HashMap<>();
-            claims.put("id", user.getId());
-            claims.put("name", user.getName());
-            claims.put("lastName", user.getLastname());
-            claims.put("email", user.getEmail());
-            claims.put("picture", user.getPicture());
-            claims.put("deleted", user.getDeleted());
-            claims.put("telephone_number", user.getTelephone_number());
-            claims.put("rol", user.getRol());
+            // Populate claims here
 
             return Jwts.builder()
                     .setClaims(claims)
                     .setSubject(user.getEmail())
                     .setIssuedAt(now)
                     .setExpiration(expirationDate)
-                    .signWith(SignatureAlgorithm.HS512, secret)
+                    .signWith(SignatureAlgorithm.HS512, secret) // Ensure the algorithm matches
                     .compact();
         }
+//        public String generateToken(User user) {
+//            Date now = new Date();
+//            Date expirationDate = new Date(now.getTime() + expirationMs);
+//            Map<String, Object> claims = new HashMap<>();
+//            claims.put("id", user.getId());
+//            claims.put("name", user.getName());
+//            claims.put("lastName", user.getLastname());
+//            claims.put("email", user.getEmail());
+//            claims.put("picture", user.getPicture());
+//            claims.put("deleted", user.getDeleted());
+//            claims.put("telephone_number", user.getTelephone_number());
+//            claims.put("rol", user.getRol());
+//
+//            return Jwts.builder()
+//                    .setClaims(claims)
+//                    .setSubject(user.getEmail())
+//                    .setIssuedAt(now)
+//                    .setExpiration(expirationDate)
+//                    .signWith(SignatureAlgorithm.HS512, secret)
+//                    .compact();
+//        }
 
         public Claims extractClaims(String token) {
             return Jwts.parser()
