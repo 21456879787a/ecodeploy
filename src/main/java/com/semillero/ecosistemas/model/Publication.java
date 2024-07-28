@@ -40,9 +40,9 @@ public class Publication {
     @Size(message = "No se pueden adjuntar más de 3 archivos.", max = 3)
     private List<String> imagesURLs;
 
-//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinColumn(name = "admin_id", referencedColumnName = "id")
-//    private Admin creatorUser;
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "admin_id", referencedColumnName = "id")
+    private Admin creatorUser;
 
     private Integer viewCount = 0;
 

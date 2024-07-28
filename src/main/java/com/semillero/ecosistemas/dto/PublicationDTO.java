@@ -3,7 +3,6 @@ package com.semillero.ecosistemas.dto;
 import com.semillero.ecosistemas.model.Publication;
 import jakarta.persistence.ElementCollection;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

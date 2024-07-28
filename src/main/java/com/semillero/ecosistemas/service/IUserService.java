@@ -1,28 +1,21 @@
 package com.semillero.ecosistemas.service;
 
-
 import com.semillero.ecosistemas.model.User;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserService {
     //Create
-    User saveGoogleUser(OAuth2User oAuth2User);
-
     public User saveUser(User user);
 
     //Find
-    public User findUserById(Long id);
+    public Optional<User> findUserById(Long id);
+    public Optional<User> findUserByEmail(String email);
+
+    //Read
+    public List<User> findAllUsers();
 
     //Update (Change State --> deleted)
     public void switchState(User user);
-
-    String generateJwtToken(User user);
-
-    String deletebyemail(String email);
-
-    List<User> getAllUsers();
-
-    User findUserByEmail(String email);
 }

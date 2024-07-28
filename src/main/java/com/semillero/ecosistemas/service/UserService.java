@@ -1,91 +1,46 @@
 package com.semillero.ecosistemas.service;
 
-import com.semillero.ecosistemas.jwt.JwtService;
 import com.semillero.ecosistemas.model.User;
 import com.semillero.ecosistemas.repository.IUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
 
     @Autowired
-    IUserRepository usuarioRepo;
-
-    @Autowired
-    JwtService jwtConfig;
-
-    @Override
-    public User findUserByEmail(String email) {
-        return usuarioRepo.findByEmail(email);
-    }
-
-    @Override
-    public User saveGoogleUser(OAuth2User oAuth2User) {
-        String email = oAuth2User.getAttribute("email");
-        String name = oAuth2User.getAttribute("given_name");
-        String lastName = oAuth2User.getAttribute("family_name");
-        String picture = oAuth2User.getAttribute("picture");
-
-        User foundUser = usuarioRepo.findByEmail(email);
-        if (foundUser != null) {
-            foundUser.setName(name);
-            foundUser.setLastname(lastName);
-            foundUser.setEmail(email);
-            foundUser.setPicture(picture);
-            return usuarioRepo.save(foundUser);
-            // VER ROLES AL GUARDAR USER
-        }
-
-        User user = new User();
-        user.setName(name);
-        user.setLastname(lastName);
-        user.setEmail(email);
-        user.setDeleted(false);
-        user.setPicture(picture);
-        // VER ROLES AL GUARDAR USER
-        return usuarioRepo.save(user);
-    }
-
-    public String generateJwtToken(User user) {
-        return jwtConfig.generateToken(user);
-    }
+    IUserRepository userRepository;
 
     @Override
     public User saveUser(User user) {
-        return usuarioRepo.save(user);
+        return userRepository.save(user);
     }
 
     @Override
-    public User findUserById(Long id) {
-        return usuarioRepo.findById(id).orElse(null);
+    public Optional<User> findUserById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
+    }
+
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
     }
 
     @Override
     public void switchState(User user) {
-        if (!user.getDeleted()) {
+        if (!user.getDeleted()){
             user.setDeleted(true); // Set deleted TRUE --> Account deactivation
-        } else {
+        }
+        else{
             user.setDeleted(false); // Set deleted FALSE --> Account Reactivation
         }
-    }
-
-    @Override
-    public String deletebyemail(String email){
-        User foundUser = usuarioRepo.findByEmail(email);
-        if(foundUser != null){
-            usuarioRepo.deleteById(foundUser.getId());
-            return "eliminado";
-
-        }
-        return "no encontrado";
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        return usuarioRepo.findAll();
     }
 }
