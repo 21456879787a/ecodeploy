@@ -27,7 +27,7 @@ public class SecurityConfig {
                                 .requestMatchers("/api/auth/login").authenticated()
                                 .requestMatchers("/api/admins/save").permitAll()
                                 .requestMatchers("/api/admins/**").hasRole("ADMIN")
-                                .anyRequest().authenticated()
+                                .anyRequest().permitAll() // volver a COLOCAR EN AUTHENTICATED
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler((request, response, authentication) -> {
